@@ -11,37 +11,13 @@ namespace Looksy.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly LooksyDbContext _context;
         private const string cNotFoundMessage = "User not found";
-        public UserController(LooksyDbContext context)
+        public UsersController(LooksyDbContext context)
         {
             _context = context;
-        }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult GetProfile()
-        {
-            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(userIdStr))
-                return Unauthorized("User not authenticated");
-
-            if (!int.TryParse(userIdStr, out var userId))
-                return Unauthorized("Invalid user ID");
-                
-            var user = _context.Users.Find(userId);
-            if (user == null)
-                return NotFound(cNotFoundMessage);
-
-            return Ok(new
-            {
-                user.Id,
-                user.Username,
-                user.Email,
-                user.CreatedAt
-            });
         }
 
         [HttpGet]
@@ -49,6 +25,10 @@ namespace Looksy.Controllers
         [Authorize]
         public async Task<IActionResult> GetProfile(int userId)
         {
+            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdStr, out var Id))
+                return Unauthorized();
+
             var user = await _context.Users.FindAsync(userId);
             if (user == null) return NotFound(cNotFoundMessage);
 
@@ -69,7 +49,7 @@ namespace Looksy.Controllers
         {
             var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(userIdStr, out var userId))
-                return Unauthorized();
+                return Unauthorized(); 
 
             var groups = await _context.Groups
                 .Where(g => g.Members.Any(m => m.Id == userId))
@@ -83,8 +63,6 @@ namespace Looksy.Controllers
 
             return Ok(groups);
         }
-
-
 
         [HttpPost]
         public async Task<IActionResult> PostProfile([FromBody] UserCreateDto user)
@@ -102,7 +80,7 @@ namespace Looksy.Controllers
             newUser.PasswordHash = new PasswordHasher<User>().HashPassword(newUser, user.Password);
 
             _context.Users.Add(newUser);
-            await _context.SaveChangesAsync(); // 👈 důležité
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetProfile), new { id = newUser.Id }, user);
         }
