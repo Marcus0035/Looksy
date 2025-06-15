@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Looksy.Infrastructure.Data.Models
+namespace Looksy.Models
 {
     public class Group : BaseModel
     {

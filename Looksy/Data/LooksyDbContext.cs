@@ -1,4 +1,4 @@
-﻿using Looksy.Infrastructure.Data.Models;
+﻿using Looksy.Models;
 using Microsoft.EntityFrameworkCore;
 
 public class LooksyDbContext : DbContext

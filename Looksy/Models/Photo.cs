@@ -1,4 +1,4 @@
-﻿using Looksy.Infrastructure.Data.Models;
+﻿using Looksy.Models;
 using System.ComponentModel.DataAnnotations;
 
 public class Photo : BaseModel

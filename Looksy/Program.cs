@@ -1,3 +1,5 @@
+using Looksy.Repositories;
+using Looksy.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -63,6 +65,9 @@ builder.Services.AddAuthentication("Bearer")
     });
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<UsersRepository>();
+builder.Services.AddScoped<UsersService>();
 
 
 var app = builder.Build();

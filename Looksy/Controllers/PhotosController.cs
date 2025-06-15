@@ -1,4 +1,4 @@
-﻿using Looksy.Data.DTOs;
+﻿using Looksy.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

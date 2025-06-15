@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Looksy.Data.DTOs
+namespace Looksy.Models.DTOs
 {
     public class UserCreateDto
     {

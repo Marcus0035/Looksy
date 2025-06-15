@@ -1,4 +1,4 @@
-﻿namespace Looksy.Data.DTOs
+﻿namespace Looksy.Models.DTOs
 {
     public class ChangePasswordDto
     {

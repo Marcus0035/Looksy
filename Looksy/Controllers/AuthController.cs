@@ -1,5 +1,5 @@
-﻿using Looksy.Data.DTOs;
-using Looksy.Infrastructure.Data.Models;
+﻿using Looksy.Models;
+using Looksy.Models.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;

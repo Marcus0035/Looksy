@@ -1,8 +1,8 @@
-﻿using Looksy.Data.DTOs;
+﻿using Looksy.Models.DTOs;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Looksy.Infrastructure.Data.Models
+namespace Looksy.Models
 {
     public class User : BaseModel
     {

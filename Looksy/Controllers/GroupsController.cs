@@ -1,5 +1,5 @@
-﻿using Looksy.Data.DTOs;
-using Looksy.Infrastructure.Data.Models;
+﻿using Looksy.Models;
+using Looksy.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

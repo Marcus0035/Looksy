@@ -1,5 +1,6 @@
-﻿using Looksy.Data.DTOs;
-using Looksy.Infrastructure.Data.Models;
+﻿using Looksy.Models;
+using Looksy.Models.DTOs;
+using Looksy.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -15,32 +16,26 @@ namespace Looksy.Controllers
     {
         private readonly LooksyDbContext _context;
         private const string cNotFoundMessage = "User not found";
-        public UsersController(LooksyDbContext context)
+        private readonly UsersService _usersService;
+        public UsersController(LooksyDbContext context, UsersService usersService)
         {
             _context = context;
+            _usersService = usersService;
         }
 
         [HttpGet]
-        [Route("{userId}")]
         [Authorize]
-        public async Task<IActionResult> GetProfile(int userId)
+        public async Task<IActionResult> GetProfile()
         {
             var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!int.TryParse(userIdStr, out var Id))
+            if (!int.TryParse(userIdStr, out var userId))
                 return Unauthorized();
 
-            var user = await _context.Users.FindAsync(userId);
-            if (user == null) return NotFound(cNotFoundMessage);
+            var userProfile = await _usersService.GetUserByIdAsync(userId);
+            if (userProfile == null)
+                return NotFound("User not found");
 
-            return Ok(new
-            {
-                user.Id,
-                user.Username,
-                user.Email,
-                user.FirstName,
-                user.LastName,
-                user.CreatedAt
-            });
+            return Ok(userProfile);
         }
 
         [HttpGet("groups")]
