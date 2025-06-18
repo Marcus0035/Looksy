@@ -1,3 +1,4 @@
+using Azure.Storage.Blobs;
 using Looksy.Repositories;
 using Looksy.Services;
 using Microsoft.EntityFrameworkCore;
@@ -66,8 +67,15 @@ builder.Services.AddAuthentication("Bearer")
 
 builder.Services.AddAuthorization();
 
+//repositories
 builder.Services.AddScoped<UsersRepository>();
+//services
 builder.Services.AddScoped<UsersService>();
+builder.Services.AddScoped<BlobService>();
+
+var blobConnectionString = builder.Configuration["AzureBlob:ConnectionString"];
+builder.Services.AddSingleton(new BlobServiceClient(blobConnectionString));
+
 
 
 var app = builder.Build();
